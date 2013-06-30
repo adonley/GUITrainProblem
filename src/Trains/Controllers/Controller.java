@@ -1,5 +1,9 @@
 package Trains.Controllers;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -48,9 +52,10 @@ public class Controller {
 	 * Scans a string, puts it into the Model while making sure 
 	 * the string is in the correct format
 	 * @param input the string to be scanned
-	 * @return <code>true</code> when the input is scanned and put into the model. <code>false</code>
-	 * when the input string contains a 'train stop' not in the correct format.
+	 * @return <code>null</code> when the input is scanned and put into the model. <code>String</code>
+	 * with the values that were incorrect input containing a 'train stop' not in the correct format.
 	 */
+	// TODO make this return String, for display working correctly
 	public boolean parseString(String input) {
 		// Get rid of all the spaces in the string
 		input = input.replaceAll(" ","");
@@ -68,8 +73,10 @@ public class Controller {
 			// Check to see if there are two letters followed by an int
 			if(Character.isLetter(temp.charAt(0)) && Character.isLetter(temp.charAt(1)) && Character.isDigit(temp.charAt(2))
 					&& temp.length() == 3) {
+				// Make sure everything is in uppercase here
+				temp = temp.toUpperCase();
 				System.out.print("Good ");
-				database.add(temp.charAt(0), temp.charAt(1), new Integer(temp.charAt(2)).intValue());
+				database.add(temp.charAt(0), temp.charAt(1), Character.getNumericValue(temp.charAt(2)));
 			}
 			else {
 				badInput = true;
@@ -78,7 +85,21 @@ public class Controller {
 			}
 		}
 		
+		if(!badInput)
+			database.print(); // TODO This should show the solutions page
+		
 		return (!badInput);
+	}
+	
+	public boolean readFile(String file) throws IOException {
+		String contents = "", temp = "";
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		while((temp = reader.readLine()) != null)
+			contents = contents + temp + ", ";
+		
+		reader.close();
+		System.out.print(contents);
+		return parseString(contents);
 	}
 
 }

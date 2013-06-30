@@ -40,6 +40,8 @@ public class Database {
 		Station temp;
 		// Try to create the station, hashed set implementation - O(1)
 		stations.add(new Station(String.valueOf(first)));
+		// Have to add the second one too (even though this is a directed graph
+		stations.add(new Station(String.valueOf(second)));
 		// Get the station
 		temp = getStation(String.valueOf(first));
 		// Add connection to the station
@@ -59,6 +61,17 @@ public class Database {
 		return null;
 	}
 	
+	public void print() {
+		Iterator<Station> itr = stations.iterator();
+		Station temp;
+		
+		System.out.print('\n');
+		while(itr.hasNext()) {
+			temp = itr.next();
+			temp.print();
+		}
+	}
+	
 	/**
 	 * This object represents stations that a train can go to. This object
 	 * also maintains all its connections in a LinkedHashSet.
@@ -69,6 +82,18 @@ public class Database {
 		
 		private String name;
 		private LinkedHashSet<Node> connections;
+		
+		public void print() {
+			Iterator <Node> itr = connections.iterator();
+			Node temp;
+			
+			System.out.print(this.name + " ");
+			while(itr.hasNext()) {
+				temp = itr.next();
+				temp.print();
+			}
+			System.out.print("\n");
+		}
 		
 		public boolean equals(Object o) {
 			if(o instanceof Station)
@@ -175,6 +200,10 @@ public class Database {
 
 		public void setDistance(int distance) {
 			this.distance = distance;
+		}
+		
+		public void print() {
+			System.out.print(this.name + this.distance + " ");
 		}
 		
 	}
