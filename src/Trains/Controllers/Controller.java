@@ -1,9 +1,9 @@
 package Trains.Controllers;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -12,6 +12,7 @@ import Trains.GUI.FileChoose;
 import Trains.GUI.GUI;
 import Trains.GUI.GetNodes;
 import Trains.GUI.SelectSolutionType;
+import Trains.GUI.SpecificRoute;
 
 /**
  * Controller for the Trains.Database class to interface with the Trains.GUI.
@@ -27,6 +28,7 @@ public class Controller {
 	private GetNodes get;
 	private FileChoose file;
 	private SelectSolutionType select;
+	private SpecificRoute specific;
 	
 	private Controller() { }
 	
@@ -39,6 +41,7 @@ public class Controller {
 		file = new FileChoose();
 		get = new GetNodes();
 		select = new SelectSolutionType();
+		specific = new SpecificRoute();
 		get.show();
 	}
 	
@@ -53,6 +56,10 @@ public class Controller {
 	
 	public void ChangeToSelectSolutionType() {
 		select.show();
+	}
+	
+	public void ChangeToSpecificRoute() {
+		specific.show();
 	}
 	
 	/**
@@ -96,6 +103,24 @@ public class Controller {
 			database.print();
 			
 		}
+		
+		return (!badInput);
+	}
+	
+	public boolean parseRoute(String input) {
+		boolean badInput = false;
+		LinkedList<String> routeToPass = new LinkedList<String>();
+		CalculateRoute calcSpecificRoute;
+		
+		// Get rid of all the spaces in the string
+		input = input.replaceAll(" ","");
+		Scanner scan = new Scanner(input);
+		
+		// Delineate by commas and new lines
+		Pattern pattern = Pattern.compile("-");
+		scan.useDelimiter(pattern);
+		
+
 		
 		return (!badInput);
 	}

@@ -29,6 +29,8 @@ public class GetNodes extends GUI {
 	private final JScrollPane inputScroller;
 	private Controller control = Controller.getInstance();
 	
+	// TODO add instructional page for input
+	
 
 	/**
 	 * Constructor calling the super constructor and setting some values for
@@ -47,6 +49,8 @@ public class GetNodes extends GUI {
 		// Create a TextField so we can center the text
 		//   don't want a border here.
 		directions = new JTextField() {
+
+			private static final long serialVersionUID = -7610718763057746401L;
 
 			@Override
 			public void setBorder(Border border) { 
@@ -149,7 +153,9 @@ public class GetNodes extends GUI {
 		public void actionPerformed(ActionEvent e) {
 			// Get text from the input box
 			// Parse the string
-			if(control.parseString(input.getText()));
+			// TODO
+			if(control.parseString(input.getText()))
+				control.ChangeToSelectSolutionType();
 		}
 		
 	}

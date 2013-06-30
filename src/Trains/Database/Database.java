@@ -49,6 +49,10 @@ public class Database {
 		
 	}
 	
+	public boolean contains(String name) {
+		return stations.contains(name);
+	}
+	
 	public Station getStation(String name) {
 		Iterator<Station> itr = stations.iterator();
 		Station temp;
@@ -98,6 +102,8 @@ public class Database {
 		public boolean equals(Object o) {
 			if(o instanceof Station)
 				return name.equals(((Station)o).getName());
+			else if(o instanceof String)
+				return name.equals(o);
 			else
 				return false;
 		}

@@ -1,11 +1,12 @@
 package Trains.GUI;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
 import Trains.Controllers.Controller;
-import Trains.GUI.FileChoose.ChooserListener;
 
 public class SelectSolutionType extends GUI {
 	
@@ -44,7 +45,7 @@ public class SelectSolutionType extends GUI {
 		// Distance of a Route Button
 		constraints.gridy = 1;
 		layout.setConstraints(distanceRoute, constraints);
-		//chooser.addActionListener(new ChooserListener());
+		distanceRoute.addActionListener(new DistanceListener());
 		frame.add(distanceRoute);
 		
 		// Number of Routes Button
@@ -57,6 +58,15 @@ public class SelectSolutionType extends GUI {
 		frame.invalidate();
 		frame.validate();
 		frame.repaint();
+		
+	}
+	
+	public class DistanceListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			control.ChangeToSpecificRoute();
+		}
 		
 	}
 	
