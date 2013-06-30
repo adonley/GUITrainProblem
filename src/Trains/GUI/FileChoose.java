@@ -61,8 +61,11 @@ public class FileChoose extends GUI {
 				System.out.println("You chose to open this file: " +
 			            chooser.getSelectedFile().getName());
 				try {
-					// TODO catch true or false version of this in order to dialog with user, bad file
-					control.readFile(chooser.getSelectedFile().getCanonicalPath());
+					
+					// TODO catch true or false version of this in order to dialog with user, bad file, string
+					if(control.readFile(chooser.getSelectedFile().getCanonicalPath())) 
+						control.ChangeToSelectSolutionType();
+					
 				} catch (IOException e1) {
 					System.out.println("Problem Reading in the File");
 					e1.printStackTrace();

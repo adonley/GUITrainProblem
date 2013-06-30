@@ -11,6 +11,7 @@ import Trains.Database.*;
 import Trains.GUI.FileChoose;
 import Trains.GUI.GUI;
 import Trains.GUI.GetNodes;
+import Trains.GUI.SelectSolutionType;
 
 /**
  * Controller for the Trains.Database class to interface with the Trains.GUI.
@@ -25,6 +26,7 @@ public class Controller {
 	
 	private GetNodes get;
 	private FileChoose file;
+	private SelectSolutionType select;
 	
 	private Controller() { }
 	
@@ -36,6 +38,7 @@ public class Controller {
 		GUI.createAndShowGUI();
 		file = new FileChoose();
 		get = new GetNodes();
+		select = new SelectSolutionType();
 		get.show();
 	}
 	
@@ -48,6 +51,10 @@ public class Controller {
 		get.show();
 	}
 	
+	public void ChangeToSelectSolutionType() {
+		select.show();
+	}
+	
 	/**
 	 * Scans a string, puts it into the Model while making sure 
 	 * the string is in the correct format
@@ -55,7 +62,7 @@ public class Controller {
 	 * @return <code>null</code> when the input is scanned and put into the model. <code>String</code>
 	 * with the values that were incorrect input containing a 'train stop' not in the correct format.
 	 */
-	// TODO make this return String, for display working correctly
+	// TODO make this return String, for display working correctly, and pass back what went wrong if it doesnt
 	public boolean parseString(String input) {
 		// Get rid of all the spaces in the string
 		input = input.replaceAll(" ","");
@@ -85,8 +92,10 @@ public class Controller {
 			}
 		}
 		
-		if(!badInput)
-			database.print(); // TODO This should show the solutions page
+		if(!badInput) {
+			database.print();
+			
+		}
 		
 		return (!badInput);
 	}
