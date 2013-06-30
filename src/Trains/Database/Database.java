@@ -1,9 +1,7 @@
 package Trains.Database;
 
-import java.beans.IntrospectionException;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 
 /**
  * A singleton database to hold the graphical information about trains.
@@ -15,7 +13,7 @@ public class Database {
 	 * ArrayList containing all the train stations. List implementation of the train
 	 * station graph.
 	 */
-	LinkedHashSet<LinkedList<String>> nodes;
+	LinkedHashSet<Station> stations;
 	
 	/**
 	 * The singleton database object that is eagerly initialized.
@@ -26,7 +24,7 @@ public class Database {
 	 * <code>private</code> constructor that initializes the database node list.
 	 */
 	private Database() {
-		nodes = new LinkedHashSet<LinkedList<String>>();
+		stations = new LinkedHashSet<Station>();
 	}
 	
 	/**
@@ -37,8 +35,28 @@ public class Database {
 		return db;
 	}
 	
-	public void add(String first, String second, int distance) {
+	public void add(char first, char second, int distance) {
 		
+		Station temp;
+		// Try to create the station, hashed set implementation - O(1)
+		stations.add(new Station(String.valueOf(first)));
+		// Get the station
+		temp = getStation(String.valueOf(first));
+		// Add connection to the station
+		temp.addConnection(String.valueOf(second), distance);
+		
+	}
+	
+	public Station getStation(String name) {
+		Iterator<Station> itr = stations.iterator();
+		Station temp;
+		while(itr.hasNext()) {
+			temp = itr.next();
+			if(name.equals(temp.getName()))
+				return temp;
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -52,11 +70,17 @@ public class Database {
 		private String name;
 		private LinkedHashSet<Node> connections;
 		
-		public boolean equals(String s) {
-			if(name.equals(s))
-				return true;
+		public boolean equals(Object o) {
+			if(o instanceof Station)
+				return name.equals(((Station)o).getName());
 			else
 				return false;
+		}
+		
+		public int hashCode() {
+			int hashed;
+			hashed = name.hashCode();
+			return hashed;
 		}
 		
 		public Station() {
@@ -94,6 +118,7 @@ public class Database {
 			}
 			return found;
 		}
+		
 		/**
 		 * Searches for a node with the String name, returns distance to that node.
 		 * @param name the String name to be matched for when looking for a station

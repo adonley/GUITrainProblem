@@ -69,7 +69,7 @@ public class Controller {
 			if(Character.isLetter(temp.charAt(0)) && Character.isLetter(temp.charAt(1)) && Character.isDigit(temp.charAt(2))
 					&& temp.length() == 3) {
 				System.out.print("Good ");
-				// TODO Add
+				database.add(temp.charAt(0), temp.charAt(1), new Integer(temp.charAt(2)).intValue());
 			}
 			else {
 				badInput = true;
