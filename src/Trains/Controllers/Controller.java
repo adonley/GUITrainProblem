@@ -1,6 +1,7 @@
 package Trains.Controllers;
 
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import Trains.Database.*;
 import Trains.GUI.FileChoose;
@@ -51,10 +52,33 @@ public class Controller {
 	 * when the input string contains a 'train stop' not in the correct format.
 	 */
 	public boolean parseString(String input) {
-		
+		// Get rid of all the spaces in the string
+		input = input.replaceAll(" ","");
 		Scanner scan = new Scanner(input);
 		
-		return true;
+		// Delineate by commas and new lines
+		Pattern pattern = Pattern.compile(",|\n");
+		scan.useDelimiter(pattern);
+		boolean badInput = false;
+		String temp;
+		
+		// Scanner automatically commas and newline chars
+		while(scan.hasNext()){
+			temp = scan.next();
+			// Check to see if there are two letters followed by an int
+			if(Character.isLetter(temp.charAt(0)) && Character.isLetter(temp.charAt(1)) && Character.isDigit(temp.charAt(2))
+					&& temp.length() == 3) {
+				System.out.print("Good ");
+				// TODO Add
+			}
+			else {
+				badInput = true;
+				System.out.print("Bad ");
+				// TODO Reset database, and tell user that input was bad
+			}
+		}
+		
+		return (!badInput);
 	}
 
 }

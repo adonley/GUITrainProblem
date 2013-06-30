@@ -147,7 +147,9 @@ public class GetNodes extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.print(input.getText());
+			// Get text from the input box
+			// Parse the string
+			if(control.parseString(input.getText()));
 		}
 		
 	}
