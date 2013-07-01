@@ -35,6 +35,10 @@ public class Database {
 		return db;
 	}
 	
+	public void reset() {
+		db.stations.clear();
+	}
+	
 	public void add(char first, char second, int distance) {
 		
 		Station temp;
@@ -111,7 +115,8 @@ public class Database {
 				return name.equals(((Station)o).getName());
 		    }
 			else if(o instanceof String) {
-				return this.name.equals((String)o);
+				String temp = (String)o.toString();
+				return this.name.equals(temp);
 			}
 			else {
 				return false;

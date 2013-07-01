@@ -95,36 +95,111 @@ public class Controller {
 			else {
 				badInput = true;
 				System.out.print("Bad ");
-				// TODO Reset database, and tell user that input was bad
+				// Reset database due to bad input
+				database.reset();
 			}
 		}
 		
+		/* This is just for testing to see the database if there was good
+		 * input.
+		 */
 		if(!badInput) {
 			database.print();
-			
 		}
 		
 		return (!badInput);
 	}
 	
-	public boolean parseRoute(String input) {
+	/**
+	 * Takes a route and computes the length of that route if it exists.
+	 * @param input the route of stations to visit.
+	 * @return a String giving information on whether the route exists, the route was input incorrectly, and
+	 * the cost of going that specific route. This is used in the specific route view.
+	 */
+	public String parseRoute(String input) {
+		
 		boolean badInput = false;
 		LinkedList<String> routeToPass = new LinkedList<String>();
+		String firstStation = null, routeString = "";
 		
 		// Get rid of all the spaces in the string
 		input = input.replaceAll(" ","");
+		// Make sure everything is in uppercase for database access
+		input = input.toUpperCase();
 		Scanner scan = new Scanner(input);
 		
 		// Delineate by commas and new lines
 		Pattern pattern = Pattern.compile("-");
 		scan.useDelimiter(pattern);
 		
-		CalculateRoute calculate = new CalculateRoute(routeToPass,"");
-		calculate.calc();
+		// Check to see if there is any first station
+		if(scan.hasNext()) {
+			firstStation = scan.next();
+			//System.out.println("First Station: " + firstStation + " length: " + firstStation.length());
+			routeToPass.add(firstStation);
+			if(firstStation.length() > 1 || !Character.isLetter(firstStation.charAt(0)))
+				badInput = true;
+		}
+		else 
+			badInput = true;
 		
-		return (!badInput);
+		// Scan for other stations to visit
+		while(scan.hasNext() && !badInput) {
+			routeToPass.add(routeString = scan.next());
+			//System.out.println("Other Stations: " + routeString + " length: " + routeString.length());
+			if(routeString.length() > 1 || !Character.isLetter(routeString.charAt(0)))
+				badInput = true;
+		}
+			
+		// Create an output string if the input was good.
+		if(!badInput) {
+			if(routeToPass.size() == 1) {
+				routeString = "The length from a station to itself is 0\n";
+				System.out.println(routeString);
+			}
+			else {
+				System.out.println("Good Input\n");
+				CalculateRoute calculate = new CalculateRoute(routeToPass);
+				int length = calculate.calc();
+				
+				// If the route doesn't exist
+				if(length < 0) {
+					routeString = "Route ";
+					for(String s : routeToPass) {
+						routeString = routeString + s + " ";
+					}
+					routeString += "does not exist.\n";
+					System.out.println(routeString);
+				}
+				
+				// Route exists and length is found
+				else {
+					// Reinitialize this
+					routeString = "Route from: "; 
+					for(String s : routeToPass) {
+						routeString = routeString + s + " ";
+					}
+					routeString += "\nLength: " + length;
+					System.out.println(routeString);
+				}
+			}
+		}
+		else {
+			System.out.println("Bad Input");
+			routeString = "Invalid Input\n";
+		}
+		
+		return routeString;
 	}
 	
+	
+	/**
+	 * Reads in a file and then parses it to be converted into a station list.
+	 * @param file the file to be read in.
+	 * @return <cod>true</code> if the file was read in correctly and parsed correctly for stations. <code>false</code> when
+	 * there was in issue reading the file, or there was corrupt information in the file.
+	 * @throws IOException
+	 */
 	public boolean readFile(String file) throws IOException {
 		String contents = "", temp = "";
 		BufferedReader reader = new BufferedReader(new FileReader(file));
