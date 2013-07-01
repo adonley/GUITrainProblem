@@ -110,7 +110,6 @@ public class Controller {
 	public boolean parseRoute(String input) {
 		boolean badInput = false;
 		LinkedList<String> routeToPass = new LinkedList<String>();
-		CalculateRoute calcSpecificRoute;
 		
 		// Get rid of all the spaces in the string
 		input = input.replaceAll(" ","");
@@ -120,7 +119,8 @@ public class Controller {
 		Pattern pattern = Pattern.compile("-");
 		scan.useDelimiter(pattern);
 		
-
+		CalculateRoute calculate = new CalculateRoute(routeToPass,"");
+		calculate.calc();
 		
 		return (!badInput);
 	}

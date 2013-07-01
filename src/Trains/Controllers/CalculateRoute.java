@@ -26,6 +26,8 @@ public class CalculateRoute {
 		// This is why linkedhashset was chosen - to save the time at these requests
 		if(database.contains("B"))
 			System.out.println("Worked");
+		else
+			System.out.println("Didnt Work");
 		
 		Iterator<String> itr = route.iterator();
 		while(itr.hasNext()) {

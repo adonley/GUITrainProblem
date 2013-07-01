@@ -66,6 +66,7 @@ public class SpecificRoute extends GUI {
 		constraints.gridwidth = 3;
 		constraints.gridheight = 1;
 		layout.setConstraints(submit, constraints);
+		submit.addActionListener(new SubmitListener());
 		frame.add(submit);
 		
 		// Refresh the frame

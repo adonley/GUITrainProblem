@@ -50,7 +50,7 @@ public class Database {
 	}
 	
 	public boolean contains(String name) {
-		return stations.contains(name);
+		return stations.contains(new Station(name));
 	}
 	
 	public Station getStation(String name) {
@@ -99,15 +99,26 @@ public class Database {
 			System.out.print("\n");
 		}
 		
-		public boolean equals(Object o) {
-			if(o instanceof Station)
-				return name.equals(((Station)o).getName());
-			else if(o instanceof String)
-				return name.equals(o);
-			else
-				return false;
+		public boolean contains(String name) {
+			// The 0 doesn't matter here because it compares only the names
+			//   in the prompt there was no duplicate routes
+			return this.connections.contains(new Node(name,0));
 		}
 		
+		@Override
+		public boolean equals(Object o) {
+		    if(o instanceof Station) {
+				return name.equals(((Station)o).getName());
+		    }
+			else if(o instanceof String) {
+				return this.name.equals((String)o);
+			}
+			else {
+				return false;
+			}
+		}
+		
+		@Override
 		public int hashCode() {
 			int hashed;
 			hashed = name.hashCode();
@@ -134,7 +145,7 @@ public class Database {
 			return;
 		}
 		
-		public boolean contains(String name) {
+		public boolean containsLinear(String name) {
 			Iterator <Node> itr = connections.iterator();
 			boolean found = false;
 			Node tempNode;
@@ -190,6 +201,21 @@ public class Database {
 		public Node(String name, int distance) {
 			this.setName(name);
 			this.setDistance(distance);
+		}
+		
+		@Override
+		public int hashCode() {
+			int hash;
+			hash = name.hashCode();
+			return hash;
+		}
+		
+		@Override
+		public boolean equals(Object o) {
+			if(o instanceof Node)
+				return this.name.equals(((Node) o).getName());
+			else
+				return false;
 		}
 
 		public String getName() {
