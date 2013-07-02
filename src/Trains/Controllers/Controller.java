@@ -159,8 +159,8 @@ public class Controller {
 			}
 			else {
 				System.out.println("Good Input\n");
-				CalculateRoute calculate = new CalculateRoute(routeToPass);
-				int length = calculate.calc();
+				CalculateRoute calculate = new CalculateRoute();
+				int length = calculate.calc(routeToPass);
 				
 				// If the route doesn't exist
 				if(length < 0) {

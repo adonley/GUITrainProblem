@@ -103,6 +103,27 @@ public class Database {
 			System.out.print("\n");
 		}
 		
+		public Node getNode(String name) {
+			Node node = new Node(name);
+			boolean found = false;
+			Iterator<Node> itr = connections.iterator();
+			
+			while(itr.hasNext() && !found) {
+				node = itr.next();
+				if(node.equals(new Node(name))) {
+					// This breaks the loop, return found node
+					found = true;
+				}
+			}
+			
+			// Return null if the node was not found
+			if(!found)
+				node = null;
+			
+			return node;
+			
+		}
+		
 		public boolean contains(String name) {
 			// The 0 doesn't matter here because it compares only the names
 			//   in the prompt there was no duplicate routes
@@ -150,6 +171,13 @@ public class Database {
 			return;
 		}
 		
+		
+		/** 
+		 * There is no real use for this function, was used before
+		 * the equals and hash function was overwritten.
+		 * @param name the name of the station to find
+		 * @return <code>true</code> if the station was found </code>
+		 */
 		public boolean containsLinear(String name) {
 			Iterator <Node> itr = connections.iterator();
 			boolean found = false;
@@ -206,6 +234,11 @@ public class Database {
 		public Node(String name, int distance) {
 			this.setName(name);
 			this.setDistance(distance);
+		}
+		
+		public Node(String name) {
+			this.setName(name);
+			this.setDistance(0);
 		}
 		
 		@Override
