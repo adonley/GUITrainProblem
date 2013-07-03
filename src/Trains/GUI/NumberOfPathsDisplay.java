@@ -14,7 +14,7 @@ import javax.swing.border.Border;
 
 import Trains.Controllers.Controller;
 
-public class SpecificRoute extends GUI {
+public class NumberOfPathsDisplay extends GUI {
 
 	private final JButton submit;
 	private final JButton instructions;
@@ -25,7 +25,7 @@ public class SpecificRoute extends GUI {
 	private final JTextField output;
 	private Controller control = Controller.getInstance();
 	
-	public SpecificRoute() {
+	public NumberOfPathsDisplay() {
 		
 		UIDefaults defaults = javax.swing.UIManager.getDefaults();
 		

@@ -29,7 +29,7 @@ public class CalculateRoute {
 				// See if it has the next stop
 				if(station.contains(route.getFirst())) {
 					// Get the distance of the next station
-					total = station.getNode(route.getFirst()).getDistance();
+					total += station.getNode(route.getFirst()).getDistance();
 				}
 				// Return -1 if it doesn't have the next stop
 				else

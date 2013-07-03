@@ -39,7 +39,7 @@ public class SelectSolutionType extends GUI {
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		layout.setConstraints(shortestRoute, constraints);
-		//chooser.addActionListener(new ChooserListener());
+		shortestRoute.addActionListener(new ShortestRouteListener());
 		frame.add(shortestRoute);
 		
 		// Distance of a Route Button
@@ -51,7 +51,7 @@ public class SelectSolutionType extends GUI {
 		// Number of Routes Button
 		constraints.gridy = 2;
 		layout.setConstraints(numberOfRoutes, constraints);
-		//chooser.addActionListener(new ChooserListener());
+		numberOfRoutes.addActionListener(new NumberOfPathsListener());
 		frame.add(numberOfRoutes);
 		
 		// Refresh the frame
@@ -70,6 +70,22 @@ public class SelectSolutionType extends GUI {
 		
 	}
 	
-	// TODO create actionlisteners for these buttons
+	public class ShortestRouteListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			control.ChangeToShortestRoute();
+		}
+		
+	}
+	
+	public class NumberOfPathsListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			control.ChangeToNumberOfPaths();
+		}
+		
+	}
 
 }

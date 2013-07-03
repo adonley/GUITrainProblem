@@ -11,7 +11,9 @@ import Trains.Database.*;
 import Trains.GUI.FileChoose;
 import Trains.GUI.GUI;
 import Trains.GUI.GetNodes;
+import Trains.GUI.NumberOfPathsDisplay;
 import Trains.GUI.SelectSolutionType;
+import Trains.GUI.ShortestRouteDisplay;
 import Trains.GUI.SpecificRoute;
 
 /**
@@ -29,11 +31,35 @@ public class Controller {
 	private FileChoose file;
 	private SelectSolutionType select;
 	private SpecificRoute specific;
+	private ShortestRouteDisplay shortest;
+	private NumberOfPathsDisplay number;
 	
 	private Controller() { }
 	
 	public static Controller getInstance() {
 		return controllerInstance;
+	}
+	
+	public void shortestRoute(String input) {
+		
+		input = input.replaceAll(" |-|\n|,", "");
+		
+		// If input was invalid (shoulda done this with a regex)
+		if(input.length() > 2 || input.length() <= 1 || 
+				!Character.isLetter(input.charAt(0)) || !Character.isLetter(input.charAt(0))) {
+			// Update with invalid input
+			shortest.updateAnswer("Invalid Input");
+			return;
+		}
+		
+		ShortestRoute shortCompute = new ShortestRoute();
+		
+		//System.out.print("Substrings: " + input.substring(0, 1) + " " + input.substring(1) + " ");
+		// Update the display
+		shortest.updateAnswer(shortCompute.compute(input.substring(0, 1), input.substring(1)));
+		
+		return;
+		
 	}
 	
 	public void start() {
@@ -42,7 +68,17 @@ public class Controller {
 		get = new GetNodes();
 		select = new SelectSolutionType();
 		specific = new SpecificRoute();
+		shortest = new ShortestRouteDisplay();
+		number = new NumberOfPathsDisplay();
 		get.show();
+	}
+	
+	public void ChangeToNumberOfPaths() {
+		number.show();
+	}
+	
+	public void ChangeToShortestRoute() {
+		shortest.show();
 	}
 	
 	public void ChangeToFileChooser() {
@@ -153,9 +189,11 @@ public class Controller {
 			
 		// Create an output string if the input was good.
 		if(!badInput) {
+			LinkedList<String> originalRoute = new LinkedList<String>(routeToPass);
 			if(routeToPass.size() == 1) {
-				routeString = "The length from a station to itself is 0\n";
-				System.out.println(routeString);
+				routeString = "The length from a station to itself is 0.\n";
+				specific.updateAnswer(routeString);
+				//System.out.println(routeString);
 			}
 			else {
 				System.out.println("Good Input\n");
@@ -165,28 +203,31 @@ public class Controller {
 				// If the route doesn't exist
 				if(length < 0) {
 					routeString = "Route ";
-					for(String s : routeToPass) {
+					for(String s : originalRoute) {
 						routeString = routeString + s + " ";
 					}
 					routeString += "does not exist.\n";
-					System.out.println(routeString);
+					specific.updateAnswer(routeString);
+					//System.out.println(routeString);
 				}
 				
 				// Route exists and length is found
 				else {
 					// Reinitialize this
 					routeString = "Route from: "; 
-					for(String s : routeToPass) {
+					for(String s : originalRoute) {
 						routeString = routeString + s + " ";
 					}
 					routeString += "\nLength: " + length;
-					System.out.println(routeString);
+					specific.updateAnswer(routeString);
+					//System.out.println(routeString);
 				}
 			}
 		}
 		else {
-			System.out.println("Bad Input");
+			//System.out.println("Bad Input");
 			routeString = "Invalid Input\n";
+			specific.updateAnswer(routeString);
 		}
 		
 		return routeString;

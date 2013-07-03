@@ -39,6 +39,10 @@ public class Database {
 		db.stations.clear();
 	}
 	
+	public LinkedHashSet<Station> getStations() {
+		return stations;
+	}
+	
 	public void add(char first, char second, int distance) {
 		
 		Station temp;
@@ -169,6 +173,10 @@ public class Database {
 		public void removeConnection(String tempStation, int distance) {
 			connections.remove(new Node(tempStation, distance));
 			return;
+		}
+		
+		public LinkedHashSet<Node> getConnections() {
+			return connections;
 		}
 		
 		

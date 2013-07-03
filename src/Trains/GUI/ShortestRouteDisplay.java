@@ -14,7 +14,7 @@ import javax.swing.border.Border;
 
 import Trains.Controllers.Controller;
 
-public class SpecificRoute extends GUI {
+public class ShortestRouteDisplay extends GUI {
 
 	private final JButton submit;
 	private final JButton instructions;
@@ -25,7 +25,7 @@ public class SpecificRoute extends GUI {
 	private final JTextField output;
 	private Controller control = Controller.getInstance();
 	
-	public SpecificRoute() {
+	public ShortestRouteDisplay() {
 		
 		UIDefaults defaults = javax.swing.UIManager.getDefaults();
 		
@@ -129,7 +129,7 @@ public class SpecificRoute extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			control.parseRoute(input.getText().toString().toUpperCase());
+			control.shortestRoute(input.getText().toString().toUpperCase());
 		}
 		
 	}
