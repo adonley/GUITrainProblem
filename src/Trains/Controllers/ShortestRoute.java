@@ -3,7 +3,6 @@ package Trains.Controllers;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-
 import Trains.Database.Database;
 import Trains.Database.Database.Node;
 import Trains.Database.Database.Station;
@@ -41,7 +40,7 @@ public class ShortestRoute {
 		return temp2;
 	}
 	
-	private void setNodeLength(String name, int length) {
+	private void setNodeLength(String name, int length, String parent) {
 		boolean found = false;
 		DijstraNode tempNode = null;
 		
@@ -51,9 +50,9 @@ public class ShortestRoute {
 			if(name.equals(tempNode.getName())) {
 				found = true;
 				tempNode.setLength(length);
+				tempNode.parent = parent;
 			}
 		}
-		
 		
 		return;
 	}
@@ -120,7 +119,7 @@ public class ShortestRoute {
 				if( current.getLength() < 0 || tempNode.getLength() + d.getDistance() < current.getLength() ) {
 				// Updated smallest length node needs to be checked against
 				//   the end node to see if it is the smallest one
-					setNodeLength(d.getName(),(tempNode.getLength() + d.getDistance()));
+					setNodeLength(d.getName(),(tempNode.getLength() + d.getDistance()), tempNode.getName());
 				}
 				
 				System.out.print(" " + d.getDistance() + "\n");
@@ -132,7 +131,7 @@ public class ShortestRoute {
 			if((tempNode = findSmallest()) == null) {
 				outOfOptions = true;
 				System.out.print("Out of options.\n");
-				//return null;
+				return "There is no path from " + startNode.getName() + " to "  + endNode.getName();
 			}
 			
 			if(tempNode == endNode) {
@@ -144,12 +143,35 @@ public class ShortestRoute {
 		}
 		
 		System.out.print("Finished: " + tempNode.getName() + " " + tempNode.getLength() + "\n");
-		return new Integer(tempNode.dijstraLength).toString(); 
+		
+		return returnPath(startNode,endNode); 
+	}
+	
+	public String returnPath(DijstraNode start, DijstraNode end) {
+		String answer = "";
+		DijstraNode tempNode = end;
+		LinkedList<String> reversePath = new LinkedList<String>();
+		
+		answer += "Shortest Path: ";
+		reversePath.add(tempNode.getName());
+		while(!tempNode.equals(start)) {
+			reversePath.add(tempNode.parent);
+			tempNode = getNode(tempNode.parent);
+		}
+		
+		while(!reversePath.isEmpty()) {
+			answer += reversePath.pollLast();
+			answer += " ";
+		}
+		
+		answer += "Length: " + end.getLength();
+		return answer;
 	}
 	
 	// Dijstra Nodes
 	public class DijstraNode {
 		String dijstraName;
+		String parent;
 		LinkedList<Node> dijstraConnections;
 		boolean visited;
 		int dijstraLength;
@@ -194,6 +216,7 @@ public class ShortestRoute {
 			this.dijstraLength = -1;
 			this.dijstraName = name;
 			this.dijstraConnections = new LinkedList<Node>();
+			this.parent = "";
 			
 			Station temp = database.getStation(name);
 			
