@@ -75,9 +75,16 @@ public class NumberOfPathsDisplay extends GUI {
 		layout.setConstraints(instructions, constraints);
 		frame.add(instructions);
 		
-		// TODO
 		// Create new list
+		constraints.gridx = 1;
+		layout.setConstraints(newSolution,constraints);
+		frame.add(newSolution);
+
 		// Different Solution
+		constraints.gridx = 2;
+		constraints.anchor = GridBagConstraints.EAST;
+		layout.setConstraints(differentSolution,constraints);
+		frame.add(differentSolution);
 		
 		
 		// Input Field
@@ -88,6 +95,7 @@ public class NumberOfPathsDisplay extends GUI {
 		constraints.gridy = 1;
 		constraints.gridwidth = 3;
 		constraints.gridheight = 3;
+		constraints.anchor = GridBagConstraints.CENTER;
 		layout.setConstraints(input, constraints);
 		frame.add(input);
 		

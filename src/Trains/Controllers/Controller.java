@@ -10,11 +10,14 @@ import java.util.regex.Pattern;
 import Trains.Database.*;
 import Trains.GUI.FileChoose;
 import Trains.GUI.GUI;
+import Trains.GUI.GetNodeInstructions;
 import Trains.GUI.GetNodes;
 import Trains.GUI.NumberOfPathsDisplay;
 import Trains.GUI.SelectSolutionType;
 import Trains.GUI.ShortestRouteDisplay;
+import Trains.GUI.ShortestRouteInstructions;
 import Trains.GUI.SpecificRoute;
+import Trains.GUI.SpecificRouteInstructions;
 
 /**
  * Controller for the Trains.Database class to interface with the Trains.GUI.
@@ -33,11 +36,18 @@ public class Controller {
 	private SpecificRoute specific;
 	private ShortestRouteDisplay shortest;
 	private NumberOfPathsDisplay number;
+	private SpecificRouteInstructions specificInstructions;
+	private GetNodeInstructions getNodeInstructions;
+	private ShortestRouteInstructions shortestRouteInstructions;
 	
 	private Controller() { }
 	
 	public static Controller getInstance() {
 		return controllerInstance;
+	}
+	
+	public void resetDatabase() {
+		database.reset();
 	}
 	
 	public void shortestRoute(String input) {
@@ -70,7 +80,22 @@ public class Controller {
 		specific = new SpecificRoute();
 		shortest = new ShortestRouteDisplay();
 		number = new NumberOfPathsDisplay();
+		specificInstructions = new SpecificRouteInstructions();
+		getNodeInstructions = new GetNodeInstructions();
+		shortestRouteInstructions = new ShortestRouteInstructions();
 		get.show();
+	}
+	
+	public void ChangeToShortestRouteInstructions() {
+		shortestRouteInstructions.show();
+	}
+	
+	public void ChangeToGetNodeInstructions() {
+		getNodeInstructions.show();
+	}
+	
+	public void ChangeToSpecificRouteInstructions() {
+		specificInstructions.show();
 	}
 	
 	public void ChangeToNumberOfPaths() {

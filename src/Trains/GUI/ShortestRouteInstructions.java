@@ -13,14 +13,14 @@ import javax.swing.border.Border;
 
 import Trains.Controllers.Controller;
 
-public class GetNodeInstructions extends GUI {
+public class ShortestRouteInstructions extends GUI {
 
 	private final JButton differentSolution;
 	private final JScrollPane panel;
 	private final JTextPane output;
 	private Controller control = Controller.getInstance();
 	
-	public GetNodeInstructions() {
+	public ShortestRouteInstructions() {
 		
 		UIDefaults defaults = javax.swing.UIManager.getDefaults();
 		
@@ -89,7 +89,7 @@ public class GetNodeInstructions extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			control.ChangeToGetNodes();
+			control.ChangeToShortestRoute();
 		}
 		
 	}

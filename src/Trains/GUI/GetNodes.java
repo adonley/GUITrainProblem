@@ -27,10 +27,8 @@ public class GetNodes extends GUI {
 	private final JTextPane input;
 	private final JTextField directions;
 	private final JScrollPane inputScroller;
-	private Controller control = Controller.getInstance();
-	
-	// TODO add instructional page for input
-	
+	private final JButton instructions;
+	private Controller control = Controller.getInstance();	
 
 	/**
 	 * Constructor calling the super constructor and setting some values for
@@ -45,6 +43,7 @@ public class GetNodes extends GUI {
 		
 		submitList = new JButton("Submit List");
 		submitFile = new JButton("Choose File");
+		instructions = new JButton("Instructions");
 		
 		// Create a TextField so we can center the text
 		//   don't want a border here.
@@ -57,6 +56,8 @@ public class GetNodes extends GUI {
 				// No more border for this component
 			}
 		};
+		
+		
 		input = new JTextPane();
 		
 		// Make the font size larger for the input field
@@ -85,14 +86,27 @@ public class GetNodes extends GUI {
 		// Remove everything from previous
 		frame.getContentPane().removeAll();
 		
-		// Directions
-		constraints.fill = GridBagConstraints.BOTH;
-		constraints.weightx = 1;
+		//Instructions
+		constraints.fill = GridBagConstraints.NONE;
+		constraints.weightx = 0;
 		constraints.weighty = 0;
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		constraints.gridwidth = 2;
+		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
+		instructions.addActionListener(new InstructionsListener());
+		layout.setConstraints(instructions, constraints);
+		frame.add(instructions);
+		
+		// Directions
+		constraints.fill = GridBagConstraints.BOTH;
+		constraints.weightx = 0;
+		constraints.weighty = 0;
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.anchor = GridBagConstraints.CENTER;
 		layout.setConstraints(directions, constraints);
 		frame.add(directions);
 		
@@ -104,6 +118,7 @@ public class GetNodes extends GUI {
 		constraints.gridy = 0;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
+		constraints.anchor = GridBagConstraints.EAST;
 		layout.setConstraints(submitFile, constraints);
 		submitFile.addActionListener(new ChooseListener());
 		frame.add(submitFile);
@@ -118,6 +133,7 @@ public class GetNodes extends GUI {
 		constraints.gridheight = 3;
 		constraints.ipadx = 0;
 		constraints.ipady = 0;
+		constraints.anchor = GridBagConstraints.CENTER;
 		layout.setConstraints(inputScroller, constraints);
 		frame.add(inputScroller);
 		
@@ -126,13 +142,14 @@ public class GetNodes extends GUI {
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.weightx = 0;
 		constraints.weighty = 0;
-		constraints.gridx = 1;
+		constraints.gridx = 0;
 		constraints.gridy = 4;
-		constraints.gridwidth = 2;
+		constraints.gridwidth = 3;
 		constraints.gridheight = 1;
 		constraints.ipadx = 0;
 		constraints.ipady = 0;
 		layout.setConstraints(submitList, constraints);
+		
 		// Add actionlistener for click
 		submitList.addActionListener(new SubmitListener());
 		frame.add(submitList);
@@ -151,9 +168,6 @@ public class GetNodes extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Get text from the input box
-			// Parse the string
-			// TODO
 			if(control.parseString(input.getText()))
 				control.ChangeToSelectSolutionType();
 		}
@@ -171,6 +185,15 @@ public class GetNodes extends GUI {
 		public void actionPerformed(ActionEvent e) {
 			// Change view to the file chooser view
 			control.ChangeToFileChooser();
+		}
+		
+	}
+	
+	public class InstructionsListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			control.ChangeToGetNodeInstructions();
 		}
 		
 	}

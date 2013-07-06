@@ -72,16 +72,27 @@ public class ShortestRouteDisplay extends GUI {
 		constraints.gridy = 0;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
+		instructions.addActionListener(new InstructionsListener());
 		layout.setConstraints(instructions, constraints);
 		frame.add(instructions);
 		
-		// TODO
 		// Create new list
+		constraints.gridx = 1;
+		newSolution.addActionListener(new GraphListener());
+		layout.setConstraints(newSolution,constraints);
+		frame.add(newSolution);
+
 		// Different Solution
+		constraints.gridx = 2;
+		constraints.anchor = GridBagConstraints.EAST;
+		differentSolution.addActionListener(new BackListener());
+		layout.setConstraints(differentSolution,constraints);
+		frame.add(differentSolution);
 		
 		
 		// Input Field
 		constraints.fill = GridBagConstraints.BOTH;
+		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 		constraints.gridx = 0;
@@ -130,6 +141,34 @@ public class ShortestRouteDisplay extends GUI {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			control.shortestRoute(input.getText().toString().toUpperCase());
+		}
+		
+	}
+	
+	public class BackListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			control.ChangeToSelectSolutionType();
+		}
+		
+	}
+	
+	public class InstructionsListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			control.ChangeToShortestRouteInstructions();
+		}
+		
+	}
+	
+	public class GraphListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			control.resetDatabase();
+			control.ChangeToGetNodes();
 		}
 		
 	}

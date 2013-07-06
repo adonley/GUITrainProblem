@@ -87,9 +87,8 @@ public class ShortestRoute {
 	}
 	
 	public String compute(String start, String end) {
-		String value = "";
 		boolean found = false, outOfOptions = false;
-		DijstraNode startNode = null, endNode = null, tempNode = null, placeHolder = null;
+		DijstraNode startNode = null, endNode = null, tempNode = null;
 		LinkedList<Node> nodeList = new LinkedList<Node>();
 		
 		// Check to see if starting node and finishing node exists
