@@ -40,7 +40,9 @@ public class NumberOfPathInstructions extends GUI {
 		Font font = new Font(Font.SANS_SERIF,Font.BOLD,24);
 		output.setEditable(false);
 		output.setFont(font);
-		output.setText("EAT A CHICKEN");
+		output.setText("Enter the station in which to start from in the input box next to 'From:' , and an ending station" +
+		" into the input box next to 'to:' . These stations must be valid stations, represented by a single character (capitalization does not matter). \n"
+		+ "\n Enter the max number of stops into the field next to 'Max Number of Stops'");
 		output.setBackground(defaults.getColor(frame));
 		
 		panel = new JScrollPane(output);

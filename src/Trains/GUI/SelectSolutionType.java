@@ -16,9 +16,9 @@ public class SelectSolutionType extends GUI {
 	private Controller control = Controller.getInstance();
 	
 	public SelectSolutionType() {
-		shortestRoute =  new JButton("    Find Shortest Route to a Station    ");
+		shortestRoute =  new JButton("Find Shortest Route Between Stations");
 		distanceRoute =  new JButton("Compute the Distance of a Specific Route");
-		numberOfRoutes = new JButton(" Find the Number of Routes to a Station ");
+		numberOfRoutes = new JButton("Find the Number of Routes to a Station with Distance with Distance < Max");
 	}
 	
 	public void show() {

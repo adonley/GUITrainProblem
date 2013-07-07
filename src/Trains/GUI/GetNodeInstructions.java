@@ -40,7 +40,11 @@ public class GetNodeInstructions extends GUI {
 		Font font = new Font(Font.SANS_SERIF,Font.BOLD,24);
 		output.setEditable(false);
 		output.setFont(font);
-		output.setText("EAT A CHICKEN");
+		output.setText("A valid graph is entered as follows:\n\n"
+				+ "'AB4, BC5, CD6'\n\n"
+				+ "This first letter represents the beginning station, the second character represents the ending station "
+				+ "and the integer represents the length of the track. The stations can be separated with commas or newline characters. All other white space is ignored."
+				+ "\n\nA file can be read in containing the same formatting of stations by click on 'Choose File'");
 		output.setBackground(defaults.getColor(frame));
 		
 		panel = new JScrollPane(output);

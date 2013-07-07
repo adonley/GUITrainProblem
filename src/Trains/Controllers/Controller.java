@@ -52,8 +52,16 @@ public class Controller {
 		database.reset();
 	}
 	
-	public void numberOfPaths() {
-		NumberOfPaths paths = new NumberOfPaths();
+	public void numberOfPaths(String start, String end, int distance) {
+		int numberOfPaths = 0;
+		String ans = "";
+		
+		NumberOfPaths paths = new NumberOfPaths(start,end);
+		numberOfPaths = paths.getNumberOfPaths(distance);
+		ans = "Number of Paths: " + numberOfPaths;
+		
+		number.updateAnswer(ans);
+		
 	}
 	
 	public void ChangeToNumberOfPathInstructions() {
@@ -133,6 +141,9 @@ public class Controller {
 	public void ChangeToSpecificRoute() {
 		specific.show();
 	}
+	
+	
+	//TODO make sure input is cool for the matrix start and end.
 	
 	/**
 	 * Scans a string, puts it into the Model while making sure 

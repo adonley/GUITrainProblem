@@ -32,7 +32,7 @@ public class ShortestRouteDisplay extends GUI {
 		submit = new JButton("Submit");
 		instructions = new JButton("Instructions");
 		differentSolution = new JButton("Back");
-		newSolution = new JButton("Create New List");
+		newSolution = new JButton("New Graph");
 		
 		input = new JTextPane();
 		

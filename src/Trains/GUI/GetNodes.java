@@ -41,7 +41,7 @@ public class GetNodes extends GUI {
 		// Need this for getting the system background color
 		UIDefaults defaults = javax.swing.UIManager.getDefaults();
 		
-		submitList = new JButton("Submit List");
+		submitList = new JButton("Submit Graph");
 		submitFile = new JButton("Choose File");
 		instructions = new JButton("Instructions");
 		

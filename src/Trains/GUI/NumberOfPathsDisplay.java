@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.UIDefaults;
@@ -21,8 +20,11 @@ public class NumberOfPathsDisplay extends GUI {
 	private final JButton newSolution;
 	private final JButton differentSolution;
 	private final JTextPane input;
-	private final JScrollPane panel;
+	private final JTextPane input2;
 	private final JTextField output;
+	private final JTextField from;
+	private final JTextField to;
+	private final JTextField spacer;
 	private Controller control = Controller.getInstance();
 	
 	public NumberOfPathsDisplay() {
@@ -32,9 +34,48 @@ public class NumberOfPathsDisplay extends GUI {
 		submit = new JButton("Submit");
 		instructions = new JButton("Instructions");
 		differentSolution = new JButton("Back");
-		newSolution = new JButton("Create New List");
+		newSolution = new JButton("New Graph");
+		
+		spacer = new JTextField("          ") {
+
+			private static final long serialVersionUID = -7610718763057746401L;
+
+			@Override
+			public void setBorder(Border border) { 
+				// No more border for this component
+			}
+		};
+		spacer.setBackground(defaults.getColor(frame));
+		
+		to = new JTextField(" to: ") {
+
+			private static final long serialVersionUID = -7610718763057746401L;
+
+			@Override
+			public void setBorder(Border border) { 
+				// No more border for this component
+			}
+		};
+		to.setBackground(defaults.getColor(frame));
+		to.setHorizontalAlignment(JTextField.CENTER);
+		to.setEditable(false);
+		
+		from = new JTextField("From: ") {
+
+			private static final long serialVersionUID = -7610718763057746401L;
+
+			@Override
+			public void setBorder(Border border) { 
+				// No more border for this component
+			}
+		};
+		from.setEditable(false);
+		from.setBackground(defaults.getColor(frame));
+		from.setHorizontalAlignment(JTextField.CENTER);
+		
 		
 		input = new JTextPane();
+		input2 = new JTextPane();
 		
 		output = new JTextField() {
 
@@ -49,12 +90,11 @@ public class NumberOfPathsDisplay extends GUI {
 		output.setEditable(false);
 		output.setBackground(defaults.getColor(frame));
 		
-		panel = new JScrollPane(output);
-		panel.setBackground(defaults.getColor(frame));
-		
 		// Make the font size larger for the input field
 		Font font = new Font(Font.SANS_SERIF,Font.BOLD,24);
 		input.setFont(font);
+		//input.setMaximumSize(maximumSize);
+		input2.setFont(font);
 	}
 	
 	public void show() {
@@ -65,6 +105,7 @@ public class NumberOfPathsDisplay extends GUI {
 		frame.getContentPane().removeAll();
 		
 		// Instructions
+		constraints.anchor = GridBagConstraints.WEST;
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.weightx = 0;
 		constraints.weighty = 0;
@@ -77,38 +118,61 @@ public class NumberOfPathsDisplay extends GUI {
 		frame.add(instructions);
 		
 		// Create new list
+		constraints.anchor = GridBagConstraints.NORTH;
 		constraints.gridx = 1;
+		constraints.gridwidth = 3;
 		newSolution.addActionListener(new NewGraphListener());
 		layout.setConstraints(newSolution,constraints);
 		frame.add(newSolution);
 
 		// Different Solution
-		constraints.gridx = 2;
+		constraints.gridx = 4;
 		constraints.anchor = GridBagConstraints.EAST;
 		differentSolution.addActionListener(new BackListener());
 		layout.setConstraints(differentSolution,constraints);
 		frame.add(differentSolution);
 		
-		
-		// Input Field
-		constraints.fill = GridBagConstraints.BOTH;
-		constraints.weightx = 1;
+		// From Instruction
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.weightx = .15;
 		constraints.weighty = 1;
 		constraints.gridx = 0;
 		constraints.gridy = 1;
-		constraints.gridwidth = 3;
-		constraints.gridheight = 3;
-		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.gridwidth = 1;
+		constraints.gridheight = 1;
+		constraints.anchor = GridBagConstraints.WEST;
+		layout.setConstraints(from, constraints);
+		frame.add(from);
+		
+		// Input Field
+		constraints.gridx = 1;
 		layout.setConstraints(input, constraints);
 		frame.add(input);
 		
+		// To Instruction
+		constraints.gridx = 2;
+		layout.setConstraints(to, constraints);
+		frame.add(to);
+		
+		// Second Input Field
+		constraints.gridx = 3;
+		layout.setConstraints(input2, constraints);
+		frame.add(input2);
+		
+		constraints.gridx = 4;
+		layout.setConstraints(spacer, constraints);
+		frame.add(spacer);
+		
+		
 		// Submit Button
 		constraints.fill = GridBagConstraints.NONE;
+		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.weightx = 0;
 		constraints.weighty = 0;
 		constraints.gridx = 0;
 		constraints.gridy = 5;
-		constraints.gridwidth = 3;
+		constraints.gridwidth = 5;
 		constraints.gridheight = 1;
 		layout.setConstraints(submit, constraints);
 		submit.addActionListener(new SubmitListener());
@@ -116,12 +180,14 @@ public class NumberOfPathsDisplay extends GUI {
 		
 		// Answer Box
 		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weightx = .25;
+		constraints.weighty = .25;
 		constraints.gridx = 0;
 		constraints.gridy = 6;
-		constraints.gridwidth = 3;
+		constraints.gridwidth = 5;
 		constraints.gridheight = 1;
-		layout.setConstraints(panel, constraints);
-		frame.add(panel);
+		layout.setConstraints(output, constraints);
+		frame.add(output);
 		
 		// Refresh the frame
 		frame.invalidate();
@@ -140,7 +206,7 @@ public class NumberOfPathsDisplay extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			control.numberOfPaths();
+			control.numberOfPaths(input.getText(),input2.getText(),30);
 		}
 		
 	}
