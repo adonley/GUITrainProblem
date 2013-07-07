@@ -62,7 +62,7 @@ public class GetNodeInstructions extends GUI {
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.gridx = 2;
-		constraints.anchor = GridBagConstraints.EAST;
+		constraints.anchor = GridBagConstraints.WEST;
 		differentSolution.addActionListener(new BackListener());
 		layout.setConstraints(differentSolution,constraints);
 		frame.add(differentSolution);

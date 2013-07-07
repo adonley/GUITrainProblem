@@ -74,7 +74,7 @@ public class ShortestRoute {
 			}
 			// If we already have established placeKeeper
 			//   and the length of the found node is less than that of placekeeper
-			else if(afterFirst && tempNode.getLength() != -1 && tempNode.getLength() < placeKeeper.getLength()) {
+			else if(afterFirst && tempNode.getLength() != -1 && tempNode.visited == false && tempNode.getLength() < placeKeeper.getLength()) {
 				placeKeeper = tempNode;
 			}
 		}
@@ -99,10 +99,12 @@ public class ShortestRoute {
 		endNode = getNode(end);
 		startNode.setLength(0);
 		tempNode = getNode(start);
+		System.out.print("START " + tempNode.dijstraName + "\n");
 		
 		// While we haven't found the shortest path to the node yet
 		//   or we didn't run out of options
 		while(!found && !outOfOptions) {
+			System.out.print(tempNode.dijstraName + '\n');
 			
 			nodeList = new LinkedList<Node>(tempNode.getConnections());
 			
@@ -125,9 +127,12 @@ public class ShortestRoute {
 				
 			}
 			
+			System.out.print(" OUT \n");
 			
-			// Find the smallest node and take it out
-			if((tempNode = findSmallest()) == null) {
+			tempNode = findSmallest();
+			
+			// Find the smallest node and take it out, this isn't actually dead..
+			if(tempNode == null) {
 				outOfOptions = true;
 				System.out.print("Out of options.\n");
 				return "There is no path from " + startNode.getName() + " to "  + endNode.getName();

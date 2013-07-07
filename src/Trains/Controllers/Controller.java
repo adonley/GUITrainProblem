@@ -12,6 +12,7 @@ import Trains.GUI.FileChoose;
 import Trains.GUI.GUI;
 import Trains.GUI.GetNodeInstructions;
 import Trains.GUI.GetNodes;
+import Trains.GUI.NumberOfPathInstructions;
 import Trains.GUI.NumberOfPathsDisplay;
 import Trains.GUI.SelectSolutionType;
 import Trains.GUI.ShortestRouteDisplay;
@@ -39,6 +40,7 @@ public class Controller {
 	private SpecificRouteInstructions specificInstructions;
 	private GetNodeInstructions getNodeInstructions;
 	private ShortestRouteInstructions shortestRouteInstructions;
+	private NumberOfPathInstructions numberPathInstructions;
 	
 	private Controller() { }
 	
@@ -48,6 +50,14 @@ public class Controller {
 	
 	public void resetDatabase() {
 		database.reset();
+	}
+	
+	public void numberOfPaths() {
+		NumberOfPaths paths = new NumberOfPaths();
+	}
+	
+	public void ChangeToNumberOfPathInstructions() {
+		numberPathInstructions.show();
 	}
 	
 	public void shortestRoute(String input) {
@@ -83,6 +93,7 @@ public class Controller {
 		specificInstructions = new SpecificRouteInstructions();
 		getNodeInstructions = new GetNodeInstructions();
 		shortestRouteInstructions = new ShortestRouteInstructions();
+		numberPathInstructions = new NumberOfPathInstructions();
 		get.show();
 	}
 	

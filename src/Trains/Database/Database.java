@@ -43,6 +43,10 @@ public class Database {
 		return stations;
 	}
 	
+	public int getSize() {
+		return stations.size();
+	}
+	
 	public void add(char first, char second, int distance) {
 		
 		Station temp;

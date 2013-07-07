@@ -72,17 +72,20 @@ public class NumberOfPathsDisplay extends GUI {
 		constraints.gridy = 0;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
+		instructions.addActionListener(new InstructionsListener());
 		layout.setConstraints(instructions, constraints);
 		frame.add(instructions);
 		
 		// Create new list
 		constraints.gridx = 1;
+		newSolution.addActionListener(new NewGraphListener());
 		layout.setConstraints(newSolution,constraints);
 		frame.add(newSolution);
 
 		// Different Solution
 		constraints.gridx = 2;
 		constraints.anchor = GridBagConstraints.EAST;
+		differentSolution.addActionListener(new BackListener());
 		layout.setConstraints(differentSolution,constraints);
 		frame.add(differentSolution);
 		
@@ -137,7 +140,35 @@ public class NumberOfPathsDisplay extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			control.parseRoute(input.getText().toString().toUpperCase());
+			control.numberOfPaths();
+		}
+		
+	}
+	
+	public class BackListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			control.ChangeToSelectSolutionType();
+		}
+		
+	}
+	
+	public class NewGraphListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			control.resetDatabase();
+			control.ChangeToGetNodes();
+		}
+		
+	}
+	
+	public class InstructionsListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			control.ChangeToNumberOfPathInstructions();
 		}
 		
 	}
