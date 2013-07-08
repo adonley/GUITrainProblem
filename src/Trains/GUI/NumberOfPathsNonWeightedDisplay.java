@@ -12,7 +12,7 @@ import javax.swing.border.Border;
 
 import Trains.Controllers.Controller;
 
-public class NumberOfPathsDisplay extends GUI {
+public class NumberOfPathsNonWeightedDisplay extends GUI {
 
 	private final JButton submit;
 	private final JButton instructions;
@@ -30,7 +30,7 @@ public class NumberOfPathsDisplay extends GUI {
 	private final JTextField spacer;
 	private Controller control = Controller.getInstance();
 	
-	public NumberOfPathsDisplay() {
+	public NumberOfPathsNonWeightedDisplay() {
 		
 		UIDefaults defaults = javax.swing.UIManager.getDefaults();
 		

@@ -65,6 +65,8 @@ public class Controller {
 	}
 	
 	public void ChangeToNumberOfPathInstructions() {
+		killOthers();
+		numberPathInstructions = new NumberOfPathInstructions();
 		numberPathInstructions.show();
 	}
 	
@@ -90,56 +92,81 @@ public class Controller {
 		
 	}
 	
+	// Had to make this so the stack doesn't continue to grow
+	public void killOthers() {
+		get = null;
+		select = null;
+		specific = null;
+		shortest = null;
+		number = null;
+		specificInstructions = null;
+		getNodeInstructions = null;
+		shortestRouteInstructions = null;
+		numberPathInstructions = null;
+	}
+	
 	public void start() {
 		GUI.createAndShowGUI();
-		file = new FileChoose();
 		get = new GetNodes();
-		select = new SelectSolutionType();
-		specific = new SpecificRoute();
-		shortest = new ShortestRouteDisplay();
-		number = new NumberOfPathsDisplay();
-		specificInstructions = new SpecificRouteInstructions();
-		getNodeInstructions = new GetNodeInstructions();
-		shortestRouteInstructions = new ShortestRouteInstructions();
-		numberPathInstructions = new NumberOfPathInstructions();
 		get.show();
 	}
 	
 	public void ChangeToShortestRouteInstructions() {
+		killOthers();
+		shortestRouteInstructions = new ShortestRouteInstructions();
 		shortestRouteInstructions.show();
 	}
 	
 	public void ChangeToGetNodeInstructions() {
+		killOthers();
+		getNodeInstructions = new GetNodeInstructions();
 		getNodeInstructions.show();
 	}
 	
 	public void ChangeToSpecificRouteInstructions() {
+		killOthers();
+		specificInstructions = new SpecificRouteInstructions();
 		specificInstructions.show();
 	}
 	
 	public void ChangeToNumberOfPaths() {
+		killOthers();
+		number = new NumberOfPathsDisplay();
 		number.show();
 	}
 	
 	public void ChangeToShortestRoute() {
+		killOthers();
+		shortest = new ShortestRouteDisplay();
 		shortest.show();
 	}
 	
 	public void ChangeToFileChooser() {
-		//file = new FileChoose();
+		killOthers();
+		file = new FileChoose();
 		file.show();
 	}
 	
 	public void ChangeToGetNodes() {
+		killOthers();
+		get = new GetNodes();
 		get.show();
 	}
 	
 	public void ChangeToSelectSolutionType() {
+		killOthers();
+		select = new SelectSolutionType();
 		select.show();
 	}
 	
 	public void ChangeToSpecificRoute() {
+		killOthers();
+		specific = new SpecificRoute();
 		specific.show();
+	}
+	
+	public void ChangeToNumberOfPathsNonWeighted() {
+		killOthers();
 	}
 	
 	
@@ -168,8 +195,7 @@ public class Controller {
 		while(scan.hasNext()){
 			temp = scan.next();
 			// Check to see if there are two letters followed by an int
-			if(Character.isLetter(temp.charAt(0)) && Character.isLetter(temp.charAt(1)) && Character.isDigit(temp.charAt(2))
-					&& temp.length() == 3) {
+			if(temp.length() == 3 && Character.isLetter(temp.charAt(0)) && Character.isLetter(temp.charAt(1)) && Character.isDigit(temp.charAt(2))) {
 				// Make sure everything is in uppercase here
 				temp = temp.toUpperCase();
 				System.out.print("Good ");

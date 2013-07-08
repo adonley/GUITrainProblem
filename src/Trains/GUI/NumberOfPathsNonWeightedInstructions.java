@@ -13,14 +13,14 @@ import javax.swing.border.Border;
 
 import Trains.Controllers.Controller;
 
-public class SpecificRouteInstructions extends GUI {
+public class NumberOfPathsNonWeightedInstructions extends GUI {
 
 	private final JButton differentSolution;
 	private final JScrollPane panel;
 	private final JTextPane output;
 	private Controller control = Controller.getInstance();
 	
-	public SpecificRouteInstructions() {
+	public NumberOfPathsNonWeightedInstructions() {
 		
 		UIDefaults defaults = javax.swing.UIManager.getDefaults();
 		
@@ -40,8 +40,9 @@ public class SpecificRouteInstructions extends GUI {
 		Font font = new Font(Font.SANS_SERIF,Font.BOLD,24);
 		output.setEditable(false);
 		output.setFont(font);
-		output.setText("Enter the path to travel between stations. Valid input is station names with dashes '-' between them (capitalization does"
-				+ " not matter). \n\nEx. 'A-B-C-D-E'\n\nThe answer will be displayed in the box at the bottom of the screen.");
+		output.setText("Enter the station in which to start from in the input box next to 'From:' , and an ending station" +
+		" into the input box next to 'to:' . These stations must be valid stations, represented by a single character (capitalization does not matter). \n"
+		+ "\n Enter the max number of stops into the field next to 'Max Number of Stops'");
 		output.setBackground(defaults.getColor(frame));
 		
 		panel = new JScrollPane(output);
@@ -90,16 +91,7 @@ public class SpecificRouteInstructions extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			control.ChangeToSpecificRoute();
-		}
-	}
-	
-	public class NewGraphListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			control.resetDatabase();
-			control.ChangeToGetNodes();
+			control.ChangeToNumberOfPathsNonWeighted();
 		}
 		
 	}

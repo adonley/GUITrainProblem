@@ -13,12 +13,15 @@ public class SelectSolutionType extends GUI {
 	private final JButton shortestRoute;
 	private final JButton distanceRoute;
 	private final JButton numberOfRoutes;
+	private final JButton numberOfRoutesNonWeighted;
 	private Controller control = Controller.getInstance();
 	
 	public SelectSolutionType() {
 		shortestRoute =  new JButton("Find Shortest Route Between Stations");
 		distanceRoute =  new JButton("Compute the Distance of a Specific Route");
 		numberOfRoutes = new JButton("Find the Number of Routes to a Station with Distance with Distance < Max");
+		numberOfRoutesNonWeighted = new JButton("Find the Number of Routes with a Certain Amount of Stops");
+		
 	}
 	
 	public void show() {
@@ -54,6 +57,12 @@ public class SelectSolutionType extends GUI {
 		numberOfRoutes.addActionListener(new NumberOfPathsListener());
 		frame.add(numberOfRoutes);
 		
+		// Number of Paths NonWeighted Button
+		constraints.gridy = 3;
+		layout.setConstraints(numberOfRoutesNonWeighted, constraints);
+		numberOfRoutesNonWeighted.addActionListener(new NumberOfPathsNonWeightedListener());
+		frame.add(numberOfRoutesNonWeighted);
+		
 		// Refresh the frame
 		frame.invalidate();
 		frame.validate();
@@ -84,6 +93,15 @@ public class SelectSolutionType extends GUI {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			control.ChangeToNumberOfPaths();
+		}
+		
+	}
+	
+	public class NumberOfPathsNonWeightedListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			control.ChangeToNumberOfPathsNonWeighted();
 		}
 		
 	}

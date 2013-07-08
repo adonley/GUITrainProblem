@@ -42,7 +42,7 @@ public class NumberOfPathInstructions extends GUI {
 		output.setFont(font);
 		output.setText("Enter the station in which to start from in the input box next to 'From:' , and an ending station" +
 		" into the input box next to 'to:' . These stations must be valid stations, represented by a single character (capitalization does not matter). \n"
-		+ "\n Enter the max number of stops into the field next to 'Max Number of Stops'");
+		+ "\n Enter the max distance into the field next to 'Less than:'");
 		output.setBackground(defaults.getColor(frame));
 		
 		panel = new JScrollPane(output);
@@ -91,7 +91,7 @@ public class NumberOfPathInstructions extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			control.ChangeToNumberOfPaths();
+			control.ChangeToNumberOfPathsNonWeighted();
 		}
 		
 	}

@@ -40,7 +40,9 @@ public class ShortestRouteInstructions extends GUI {
 		Font font = new Font(Font.SANS_SERIF,Font.BOLD,24);
 		output.setEditable(false);
 		output.setFont(font);
-		output.setText("EAT A CHICKEN");
+		output.setText("Enter the two stations for which to compute the shortest path. Valid input is two letters with a space or"
+				+ " - between them. A station to itself is also valid input. \n\nEx. 'A-B' or 'A B'.\n\nThe answer will be displayed"
+				+ " at the bottom of the screen.");
 		output.setBackground(defaults.getColor(frame));
 		
 		panel = new JScrollPane(output);

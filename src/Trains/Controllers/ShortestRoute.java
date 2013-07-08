@@ -57,6 +57,11 @@ public class ShortestRoute {
 		return;
 	}
 	
+	
+	/**
+	 * Finds the smallest edge that is connected to the Dijkstra tree.
+	 * @return DijstraNode with the least distance.
+	 */
 	public DijstraNode findSmallest() {
 
 		boolean afterFirst = false;
@@ -86,6 +91,100 @@ public class ShortestRoute {
 		return placeKeeper;
 	}
 	
+	public String computeSameNode(String start) {
+		boolean outOfOptions = false;
+		DijstraNode startNode = null, tempNode = null;
+		LinkedList<Node> nodeList = new LinkedList<Node>();
+		
+		startNode = getNode(start);
+		startNode.setLength(0);
+		tempNode = getNode(start);
+		System.out.print("START " + tempNode.dijstraName + "\n");
+		
+		// While we haven't found the shortest path to the node yet
+		//   or we didn't run out of options
+		while(!outOfOptions) {
+			System.out.print(tempNode.dijstraName + '\n');
+			
+			nodeList = new LinkedList<Node>(tempNode.getConnections());
+			
+			// Need to copy position of shortest length away node
+			// Relax all the other nodes
+			for(Node d : nodeList) {
+				
+				// Current Node, so there is only one call
+				DijstraNode current = getNode(d.getName());
+				System.out.print(d.getName());
+				
+				// If the new edge is has less weight relax
+				if( current.getLength() < 0 || tempNode.getLength() + d.getDistance() < current.getLength() ) {
+				// Updated smallest length node needs to be checked against
+				//   the end node to see if it is the smallest one
+					setNodeLength(d.getName(),(tempNode.getLength() + d.getDistance()), tempNode.getName());
+				}
+				
+				System.out.print(" " + d.getDistance() + "\n");
+				
+			}
+			
+			System.out.print(" OUT \n");
+			
+			tempNode = findSmallest();
+			
+			// Find the smallest node and take it out, this isn't actually dead..
+			if(tempNode == null) {
+				outOfOptions = true;
+				System.out.print("Out of options.\n");
+			}
+
+		}
+		
+		int smallest = 0;
+		DijstraNode tempStation = null;
+		boolean afterFirst2 = false;
+		//LinkedList<DijstraNode> backNodes;
+		// So we have a completed algorithm here.
+		for(DijstraNode s : getBackNodes(start)) {
+			
+			if(!afterFirst2 && s.getLength() > -1) {
+				afterFirst2 = true;
+				tempStation = s;
+				smallest = s.getLength() + s.getConnection(start).getDistance();
+			}
+			else if(afterFirst2 && s.getLength() > -1 && s.getLength() + s.getConnection(start).getDistance() < smallest) {
+				tempStation = s;
+				smallest = s.getLength() + s.getConnection(start).getDistance();
+			}
+
+		}
+		
+		if(tempStation != null) {
+			System.out.print("Finished: " + tempStation.getName() + " " + tempStation.getLength() + "\n");
+			return (returnPath2(startNode,tempStation));
+		}
+		
+		return "There is no path from " + startNode.dijstraName + " to " + startNode.dijstraName + "\n"; 
+	}
+	
+	private LinkedList<DijstraNode> getBackNodes(String node) {
+		
+		LinkedList<DijstraNode> ans = new LinkedList<DijstraNode>();
+		//Station start = database.getStation(node);
+		
+		for(DijstraNode d : dijstraList) 
+			for(Node nodes : d.getConnections() ) 
+				if(node.equals(nodes.getName()))
+					ans.add(d);
+		
+		return ans;
+	}
+	
+	/** 
+	 * Dijkstra's algorithm that stops when the shortest path to the node is found.
+	 * @param start beginning node
+	 * @param end ending node
+	 * @return a string with the results of the algorithm.
+	 */
 	public String compute(String start, String end) {
 		boolean found = false, outOfOptions = false;
 		DijstraNode startNode = null, endNode = null, tempNode = null;
@@ -95,11 +194,15 @@ public class ShortestRoute {
 		if( !database.contains(start) || !database.contains(end) ) 
 			return "Invalid Input, station(s) do not exist.";
 		
+		
 		startNode = getNode(start);
 		endNode = getNode(end);
 		startNode.setLength(0);
 		tempNode = getNode(start);
 		System.out.print("START " + tempNode.dijstraName + "\n");
+		
+		if(startNode.dijstraName.equals(endNode.dijstraName))
+			return computeSameNode(start);
 		
 		// While we haven't found the shortest path to the node yet
 		//   or we didn't run out of options
@@ -151,6 +254,13 @@ public class ShortestRoute {
 		return returnPath(startNode,endNode); 
 	}
 	
+	/**
+	 * Creates a string that displays the path of the shortest route from the start node to the 
+	 * terminal node.
+	 * @param start beginning node of the path
+	 * @param end terminal node of the path
+	 * @return String containing the path from the beginning to terminal node.
+	 */
 	public String returnPath(DijstraNode start, DijstraNode end) {
 		String answer = "";
 		DijstraNode tempNode = end;
@@ -172,7 +282,34 @@ public class ShortestRoute {
 		return answer;
 	}
 	
-	// Dijstra Nodes
+	public String returnPath2(DijstraNode start, DijstraNode end) {
+		String answer = "";
+		DijstraNode tempNode = end;
+		LinkedList<String> reversePath = new LinkedList<String>();
+		
+		answer += "Shortest Path: ";
+		reversePath.add(tempNode.getName());
+		while(!tempNode.equals(start)) {
+			reversePath.add(tempNode.parent);
+			tempNode = getNode(tempNode.parent);
+		}
+		
+		while(!reversePath.isEmpty()) {
+			answer += reversePath.pollLast();
+			answer += " ";
+		}
+		
+		answer += start.getName() + " ";
+		
+		answer += "Length: " + (end.getLength() + end.getConnection(start.getName()).getDistance());
+		return answer;
+	}
+	
+	/**
+	 * A misspelled class that are the nodes to a Dijkstra shortest path algorithm
+	 * @author Andrew Donley
+	 *
+	 */
 	public class DijstraNode {
 		String dijstraName;
 		String parent;
@@ -187,6 +324,15 @@ public class ShortestRoute {
 				n.print();
 			}
 			
+		}
+		
+		public Node getConnection(String name) {
+			for(Node node : dijstraConnections) {
+				if(name.equals(node.getName()))
+					return node;
+			}
+			
+			return null;
 		}
 		
 		public LinkedList<Node> getConnections() {
