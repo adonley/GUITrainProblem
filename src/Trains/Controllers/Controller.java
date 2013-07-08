@@ -14,6 +14,8 @@ import Trains.GUI.GetNodeInstructions;
 import Trains.GUI.GetNodes;
 import Trains.GUI.NumberOfPathInstructions;
 import Trains.GUI.NumberOfPathsDisplay;
+import Trains.GUI.NumberOfPathsNonWeightedDisplay;
+import Trains.GUI.NumberOfPathsNonWeightedInstructions;
 import Trains.GUI.SelectSolutionType;
 import Trains.GUI.ShortestRouteDisplay;
 import Trains.GUI.ShortestRouteInstructions;
@@ -41,6 +43,8 @@ public class Controller {
 	private GetNodeInstructions getNodeInstructions;
 	private ShortestRouteInstructions shortestRouteInstructions;
 	private NumberOfPathInstructions numberPathInstructions;
+	private NumberOfPathsNonWeightedDisplay numberOfPathNonWeighted;
+	private NumberOfPathsNonWeightedInstructions numberOfPathNonWeightedInstructions;
 	
 	private Controller() { }
 	
@@ -52,14 +56,45 @@ public class Controller {
 		database.reset();
 	}
 	
-	public void numberOfPaths(String start, String end, int distance) {
+	public void numberOfPathsNonWeightedCompute(String start, String end, String distance, int selection) {
 		int numberOfPaths = 0;
 		String ans = "";
+		start.toUpperCase();
+		end.toUpperCase();
+		Integer i = new Integer(distance);
 		
-		NumberOfPaths paths = new NumberOfPaths(start,end);
-		numberOfPaths = paths.getNumberOfPaths(distance);
-		ans = "Number of Paths: " + numberOfPaths;
+		if(start.length() != 1 || end.length() != 1 || !database.contains(start) || !database.contains(end) || i == null || i < 0) {
+			ans = "Invalid Input. ";
+		}
+		else if(selection == 1) {
+			NumberOfPathsNonWeighted paths = new NumberOfPathsNonWeighted();
+			numberOfPaths = paths.exactNumberPaths(start, end, i);
+			ans = "There are " + numberOfPaths + " paths from " + start + " to " + end + " with length " + i + ".";
+		}
+		else if(selection == 0) {
+			NumberOfPathsNonWeighted paths = new NumberOfPathsNonWeighted();
+			numberOfPaths = paths.upToMaxPaths(start, end, i);
+			ans = "There are " + numberOfPaths + " paths from " + start + " to " + end + " with length up to " + i + ".";
+		}
+		numberOfPathNonWeighted.updateAnswer(ans);
+	}
+	
+	public void numberOfPaths(String start, String end, String distance) {
+		int numberOfPaths = 0;
+		String ans = "";
+		start.toUpperCase();
+		end.toUpperCase();
+		Integer i = new Integer(distance);
 		
+		if(start.length() != 1 || end.length() != 1 || !database.contains(start) || !database.contains(end) || i == null 
+				|| i < 0) {
+			ans = "Invalid Input. ";
+		}
+		else {
+			NumberOfPaths paths = new NumberOfPaths(start,end);
+			numberOfPaths = paths.getNumberOfPaths(i);
+			ans = "There are " + numberOfPaths + " paths from " + start + " to " + end + " distance " + i + ".";
+		}
 		number.updateAnswer(ans);
 		
 	}
@@ -103,6 +138,8 @@ public class Controller {
 		getNodeInstructions = null;
 		shortestRouteInstructions = null;
 		numberPathInstructions = null;
+		numberOfPathNonWeighted = null;
+		numberOfPathNonWeightedInstructions = null;
 	}
 	
 	public void start() {
@@ -167,6 +204,14 @@ public class Controller {
 	
 	public void ChangeToNumberOfPathsNonWeighted() {
 		killOthers();
+		numberOfPathNonWeighted = new NumberOfPathsNonWeightedDisplay();
+		numberOfPathNonWeighted.show();
+	}
+	
+	public void ChangeToNumberOfPathsNonWeightedInstructions() {
+		killOthers();
+		numberOfPathNonWeightedInstructions = new NumberOfPathsNonWeightedInstructions();
+		numberOfPathNonWeightedInstructions.show();
 	}
 	
 	

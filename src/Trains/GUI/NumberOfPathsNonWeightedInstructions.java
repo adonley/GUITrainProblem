@@ -42,7 +42,9 @@ public class NumberOfPathsNonWeightedInstructions extends GUI {
 		output.setFont(font);
 		output.setText("Enter the station in which to start from in the input box next to 'From:' , and an ending station" +
 		" into the input box next to 'to:' . These stations must be valid stations, represented by a single character (capitalization does not matter). \n"
-		+ "\n Enter the max number of stops into the field next to 'Max Number of Stops'");
+		+ "\nUse the drop down to select whether you want you want to include all the paths up to a certain number or exactly a certain number of paths. Lastly,"
+		+ " enter the number of stops into the input box next to the drop down box."
+		+ "\n\nThe answer is displayed underneath the submit button.");
 		output.setBackground(defaults.getColor(frame));
 		
 		panel = new JScrollPane(output);

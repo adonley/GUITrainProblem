@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.UIDefaults;
 import javax.swing.border.Border;
@@ -28,9 +29,14 @@ public class NumberOfPathsNonWeightedDisplay extends GUI {
 	private final JTextField max;
 	private final JTextField stops;
 	private final JTextField spacer;
+	private final JComboBox select;
 	private Controller control = Controller.getInstance();
 	
 	public NumberOfPathsNonWeightedDisplay() {
+		String [] selections = { "up to", "exactly"};
+		
+		select = new JComboBox(selections);
+		select.setSelectedIndex(0);
 		
 		UIDefaults defaults = javax.swing.UIManager.getDefaults();
 		
@@ -39,7 +45,7 @@ public class NumberOfPathsNonWeightedDisplay extends GUI {
 		differentSolution = new JButton("Back");
 		newSolution = new JButton("New Graph");
 		
-		header = new JTextField("Number of Routes to a Station with Distance < Max") {
+		header = new JTextField("Number of Routes to a Station via Stops") {
 
 			private static final long serialVersionUID = -7610718763057746401L;
 
@@ -63,7 +69,7 @@ public class NumberOfPathsNonWeightedDisplay extends GUI {
 		max.setBackground(defaults.getColor(frame));
 		max.setHorizontalAlignment(JTextField.CENTER);
 		
-		stops = new JTextField(" distance.") {
+		stops = new JTextField(" stops.") {
 
 			private static final long serialVersionUID = -7610718763057746401L;
 
@@ -221,8 +227,8 @@ public class NumberOfPathsNonWeightedDisplay extends GUI {
 		// Up to Max
 		constraints.gridy = 3;
 		constraints.gridx = 0;
-		layout.setConstraints(max, constraints);
-		frame.add(max);
+		layout.setConstraints(select, constraints);
+		frame.add(select);
 		
 		// Third Input
 		constraints.gridx = 1;
@@ -275,7 +281,9 @@ public class NumberOfPathsNonWeightedDisplay extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			control.numberOfPaths(input.getText(),input2.getText(),30);
+			Integer i = new Integer(select.getSelectedIndex());
+			System.out.print(i + "Selection\n");
+			control.numberOfPathsNonWeightedCompute(input.getText(),input2.getText(),input3.getText(),i);
 		}
 		
 	}
@@ -303,7 +311,7 @@ public class NumberOfPathsNonWeightedDisplay extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			control.ChangeToNumberOfPathInstructions();
+			control.ChangeToNumberOfPathsNonWeightedInstructions();
 		}
 		
 	}

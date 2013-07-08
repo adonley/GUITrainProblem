@@ -275,7 +275,7 @@ public class NumberOfPathsDisplay extends GUI {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			control.numberOfPaths(input.getText(),input2.getText(),30);
+			control.numberOfPaths(input.getText(),input2.getText(),input3.getText());
 		}
 		
 	}

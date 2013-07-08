@@ -42,7 +42,8 @@ public class NumberOfPathInstructions extends GUI {
 		output.setFont(font);
 		output.setText("Enter the station in which to start from in the input box next to 'From:' , and an ending station" +
 		" into the input box next to 'to:' . These stations must be valid stations, represented by a single character (capitalization does not matter). \n"
-		+ "\n Enter the max distance into the field next to 'Less than:'");
+		+ "\nEnter the max distance into the field next to 'Less than:'"
+		+ "\n\nThe answer is displayed underneath the submit button.");
 		output.setBackground(defaults.getColor(frame));
 		
 		panel = new JScrollPane(output);
