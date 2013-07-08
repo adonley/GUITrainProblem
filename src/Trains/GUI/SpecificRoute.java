@@ -23,11 +23,13 @@ public class SpecificRoute extends GUI {
 	private final JTextPane input;
 	private final JScrollPane panel;
 	private final JTextField output;
+	private final JTextField title;
 	private Controller control = Controller.getInstance();
 	
 	public SpecificRoute() {
 		
 		UIDefaults defaults = javax.swing.UIManager.getDefaults();
+		Font font = new Font(Font.SANS_SERIF,Font.BOLD,24);
 		
 		submit = new JButton("Submit");
 		instructions = new JButton("Instructions");
@@ -35,6 +37,19 @@ public class SpecificRoute extends GUI {
 		newSolution = new JButton("New Graph");
 		
 		input = new JTextPane();
+		
+		title = new JTextField("Specific Route") {
+
+			private static final long serialVersionUID = -7610718763057746401L;
+
+			@Override
+			public void setBorder(Border border) { 
+				// No more border for this component
+			}
+		};
+		//title.setHorizontalAlignment(JTextField.CENTER);
+		title.setBackground(defaults.getColor(frame));
+		title.setFont(font);
 		
 		output = new JTextField() {
 
@@ -53,7 +68,6 @@ public class SpecificRoute extends GUI {
 		panel.setBackground(defaults.getColor(frame));
 		
 		// Make the font size larger for the input field
-		Font font = new Font(Font.SANS_SERIF,Font.BOLD,24);
 		input.setFont(font);
 	}
 	
@@ -89,12 +103,20 @@ public class SpecificRoute extends GUI {
 		layout.setConstraints(differentSolution,constraints);
 		frame.add(differentSolution);
 		
+		// Title Bar
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.gridwidth = 3;
+		constraints.anchor = GridBagConstraints.CENTER;
+		layout.setConstraints(title,constraints);
+		frame.add(title);
+		
 		// Input Field
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 		constraints.gridx = 0;
-		constraints.gridy = 1;
+		constraints.gridy = 2;
 		constraints.gridwidth = 3;
 		constraints.gridheight = 3;
 		constraints.anchor = GridBagConstraints.CENTER;

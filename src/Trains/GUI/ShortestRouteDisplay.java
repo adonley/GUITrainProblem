@@ -21,6 +21,7 @@ public class ShortestRouteDisplay extends GUI {
 	private final JButton newSolution;
 	private final JButton differentSolution;
 	private final JTextPane input;
+	private final JTextField title;
 	private final JScrollPane panel;
 	private final JTextField output;
 	private Controller control = Controller.getInstance();
@@ -28,6 +29,7 @@ public class ShortestRouteDisplay extends GUI {
 	public ShortestRouteDisplay() {
 		
 		UIDefaults defaults = javax.swing.UIManager.getDefaults();
+		Font font = new Font(Font.SANS_SERIF,Font.BOLD,24);
 		
 		submit = new JButton("Submit");
 		instructions = new JButton("Instructions");
@@ -35,6 +37,19 @@ public class ShortestRouteDisplay extends GUI {
 		newSolution = new JButton("New Graph");
 		
 		input = new JTextPane();
+		
+		title = new JTextField("Shortest Route") {
+
+			private static final long serialVersionUID = -7610718763057746401L;
+
+			@Override
+			public void setBorder(Border border) { 
+				// No more border for this component
+			}
+		};
+		//title.setHorizontalAlignment(JTextField.CENTER);
+		title.setBackground(defaults.getColor(frame));
+		title.setFont(font);
 		
 		output = new JTextField() {
 
@@ -53,7 +68,6 @@ public class ShortestRouteDisplay extends GUI {
 		panel.setBackground(defaults.getColor(frame));
 		
 		// Make the font size larger for the input field
-		Font font = new Font(Font.SANS_SERIF,Font.BOLD,24);
 		input.setFont(font);
 	}
 	
@@ -88,7 +102,14 @@ public class ShortestRouteDisplay extends GUI {
 		differentSolution.addActionListener(new BackListener());
 		layout.setConstraints(differentSolution,constraints);
 		frame.add(differentSolution);
-		
+
+		// Title Bar
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.gridwidth = 3;
+		constraints.anchor = GridBagConstraints.CENTER;
+		layout.setConstraints(title,constraints);
+		frame.add(title);
 		
 		// Input Field
 		constraints.fill = GridBagConstraints.BOTH;
@@ -96,7 +117,7 @@ public class ShortestRouteDisplay extends GUI {
 		constraints.weightx = 1;
 		constraints.weighty = 1;
 		constraints.gridx = 0;
-		constraints.gridy = 1;
+		constraints.gridy = 2;
 		constraints.gridwidth = 3;
 		constraints.gridheight = 3;
 		layout.setConstraints(input, constraints);
