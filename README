@@ -2,11 +2,10 @@ Java Solution to the ThoughtWorks - Train Problem [GUI version]
 ******************************************
 
 Compiled and built with JDK 6 using eclipse
-<<<<<<< HEAD
-Read the Documentation PDF if there is any trouble with usage.
+The documentation PDF contains usage and algorithm details.
 
 =======
-
-Needed to use more interfaces with the swing GUI for this project. There are a lot of copied functions amongst the GUI classes.
+Things that could have been done better:
+Needed to use more interfaces with the swing GUI for this project. 
+There are a lot of copied functions amongst the GUI classes.
 Also, LinkedHashSet was not the best data structure used to store nodes.
->>>>>>> a958a8580af9f81059ec04898c5ae33c38767cdb
